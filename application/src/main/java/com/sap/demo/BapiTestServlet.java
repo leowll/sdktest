@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.sap.cloud.sdk.cloudplatform.connectivity.Destination;
 import com.sap.cloud.sdk.cloudplatform.connectivity.DestinationAccessor;
 import com.sap.cloud.sdk.s4hana.connectivity.rfc.BapiRequest;
@@ -21,7 +24,7 @@ import com.sap.cloud.sdk.s4hana.connectivity.rfc.TableRow;
 @WebServlet("/BapiTestServlet")
 public class BapiTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	Logger LOG = LoggerFactory.getLogger(BapiTestServlet.class);
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -32,6 +35,7 @@ public class BapiTestServlet extends HttpServlet {
 			BapiRequestResult result = getAccountGL(destination);
 			writer.write(result.size());
 		} catch (Throwable e) {
+			LOG.error(e.getMessage());
 			e.printStackTrace(writer);
 		}
 
